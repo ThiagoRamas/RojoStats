@@ -1,22 +1,52 @@
-# RojoStats
+# 🔴 RojoStats
 
-Plataforma independiente para monitorear estadísticas públicas de las redes
-sociales vinculadas al Club Atlético Independiente.
+Aplicación desarrollada en Python para consultar estadísticas públicas del canal oficial de YouTube del Club Atlético Independiente y actualizar automáticamente un mensaje en Telegram.
 
-## Estado
+> RojoStats es un proyecto independiente y no oficial. No está afiliado, patrocinado ni administrado por el Club Atlético Independiente.
 
-Versión inicial en desarrollo.
+---
 
-## Funcionalidades actuales
+## 📌 Descripción
 
-- Consulta de estadísticas públicas mediante YouTube Data API v3.
-- Publicación y edición automática de un mensaje en Telegram.
-- Registro local del último estado consultado.
+RojoStats obtiene información pública mediante la YouTube Data API v3 y muestra en Telegram:
 
-## Aviso
+- Cantidad de suscriptores.
+- Visualizaciones totales.
+- Cantidad de videos publicados.
+- Variación respecto de la medición anterior.
+- Fecha y hora de la última actualización.
 
-RojoStats es un proyecto independiente y no oficial. No está afiliado,
-patrocinado ni administrado por el Club Atlético Independiente.
+El bot publica un único mensaje y lo edita en cada actualización, evitando enviar mensajes repetidos al canal.
 
-Los datos de YouTube pertenecen a sus respectivos titulares y se obtienen
-mediante la YouTube Data API.
+---
+
+## 📸 Vista previa
+
+El mensaje publicado en Telegram incluye un panel similar al siguiente:
+
+```text
+🔴 ROJOSTATS
+Estadísticas digitales de Independiente
+
+━━━━━━━━━━━━━━━━━━━━
+
+📺 YouTube
+Club Atlético Independiente
+
+👥 Suscriptores
+112.000
+Variación: +1.000
+
+👁️ Visualizaciones totales
+13.122.992
+Variación: +25.000
+
+🎬 Videos publicados
+1.119
+Variación: +1
+
+━━━━━━━━━━━━━━━━━━━━
+
+🕒 Última actualización
+16/07/2026 - 11:00git clone https://github.com/ThiagoRamas/RojoStats.git
+cd RojoStats

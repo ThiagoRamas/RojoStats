@@ -28,9 +28,7 @@ El proyecto fue desarrollado con una arquitectura modular para facilitar su mant
 
 # 📷 Vista previa
 
-> *(Próximamente se agregará una captura del mensaje publicado en Telegram.)*
-
----
+![RojoStats en Telegram](docs/telegram-preview.jpg)
 
 # ✨ Funcionalidades
 

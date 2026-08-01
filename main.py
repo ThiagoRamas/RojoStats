@@ -1,5 +1,6 @@
 import asyncio
 
+from analytics.signals import calcular_senales
 from config import validar_configuracion
 from storage.repository import cargar_datos, guardar_datos
 from storage.history import (
@@ -36,7 +37,8 @@ async def ejecutar_actualizacion() -> None:
     print("Message ID guardado:", datos_anteriores.get("message_id"))
 
     comparaciones = calcular_comparaciones(historial, estadisticas)
-    mensaje = crear_mensaje(estadisticas, comparaciones)
+    senales = calcular_senales(estadisticas, comparaciones)
+    mensaje = crear_mensaje(estadisticas, comparaciones, senales)
 
     print("\nMensaje generado:")
     print(mensaje)

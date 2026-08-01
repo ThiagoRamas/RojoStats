@@ -94,9 +94,17 @@ def _rendimiento_videos(estadisticas: dict[str, Any]) -> str:
 def crear_mensaje(
     estadisticas: dict[str, Any],
     comparaciones: dict[str, dict[str, Any] | None],
+    senales: list[str] | None = None,
 ) -> str:
     """Construye el informe de Telegram con crecimiento y promedios."""
     fecha_actualizacion = datetime.now().strftime("%d/%m/%Y - %H:%M")
+    bloque_senales = ""
+    if senales:
+        bloque_senales = (
+            "💡 <b>Señales destacadas</b>\n"
+            + "\n".join(senales)
+            + "\n\n"
+        )
 
     return (
         "🔴 <b>ROJOSTATS</b>\n"
@@ -117,6 +125,7 @@ def crear_mensaje(
         f"Últimos 7 días: {_promedio_periodo(comparaciones, '7_dias')}\n"
         f"Últimos 30 días: {_promedio_periodo(comparaciones, '30_dias')}\n\n"
         f"{_rendimiento_videos(estadisticas)}"
+        f"{bloque_senales}"
         "━━━━━━━━━━━━━━━━━━━━\n\n"
         "🕒 <b>Última actualización</b>\n"
         f"{fecha_actualizacion}\n\n"

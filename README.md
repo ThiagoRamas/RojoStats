@@ -28,38 +28,50 @@ El proyecto está pensado como una solución pequeña pero completa de integraci
 - Persistencia del historial entre ejecuciones.
 - Pruebas automatizadas para historial, tendencias y respuestas de YouTube.
 
+## Capturas del informe
+
+El mensaje se actualiza automáticamente sin generar publicaciones duplicadas.
+
+<table>
+  <tr>
+    <td><img src="docs/telegram-overview.jpeg" alt="Resumen general de RojoStats"></td>
+    <td><img src="docs/telegram-performance.jpeg" alt="Rendimiento y señales de RojoStats"></td>
+    <td><img src="docs/telegram-footer.jpeg" alt="Cierre del informe de RojoStats"></td>
+  </tr>
+</table>
+
 ## Arquitectura
 
 ```text
 YouTube Data API
         │
         ▼
-youtube_service     Recolección y normalización
+youtube_service      Recolección y normalización
         │
         ▼
-storage             Historial y compactación
+storage              Historial y compactación
         │
         ▼
-analytics           Comparaciones, promedios y señales
+analytics            Comparaciones, promedios y señales
         │
         ▼
-telegram_service    Construcción y publicación del informe
+telegram_service     Construcción y publicación del informe
         │
         ▼
-GitHub Actions      Ejecución horaria y persistencia
+GitHub Actions       Ejecución horaria y persistencia
 ```
 
 ### Estructura principal
 
 ```text
 RojoStats/
-├── .github/workflows/   # Automatización horaria
-├── analytics/           # Señales y tendencias
-├── storage/             # Estado e historial
-├── telegram_service/    # Cliente y formato del informe
-├── tests/               # Pruebas automatizadas
-├── utils/               # Formateo numérico
-├── youtube_service/     # Integración con YouTube
+├── .github/workflows/  # Automatización horaria
+├── analytics/          # Señales y tendencias
+├── storage/            # Estado e historial
+├── telegram_service/   # Cliente y formato del informe
+├── tests/              # Pruebas automatizadas
+├── utils/              # Formateo numérico
+├── youtube_service/    # Integración con YouTube
 ├── config.py
 └── main.py
 ```

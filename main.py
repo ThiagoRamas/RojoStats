@@ -2,6 +2,11 @@ import asyncio
 
 from config import validar_configuracion
 from storage.repository import cargar_datos, guardar_datos
+from storage.history import (
+    calcular_comparaciones,
+    cargar_historial,
+    registrar_medicion,
+)
 from telegram_service.client import (
     TelegramServiceError,
     publicar_o_actualizar_mensaje,
@@ -14,22 +19,35 @@ from youtube_service.client import (
 
 
 async def ejecutar_actualizacion() -> None:
-    """Consulta YouTube y actualiza el mensaje de Telegram."""
-
     validar_configuracion()
 
     datos_anteriores = cargar_datos()
+    historial = cargar_historial()
+
+    # Migra automáticamente la última medición de la versión anterior.
+    if not historial and any(
+        int(datos_anteriores.get(metrica, 0))
+        for metrica in ("suscriptores", "visualizaciones", "videos")
+    ):
+        historial = registrar_medicion(historial, datos_anteriores)
+
     estadisticas = obtener_estadisticas_canal()
 
-    mensaje = crear_mensaje(
-        estadisticas=estadisticas,
-        datos_anteriores=datos_anteriores,
-    )
+    print("Message ID guardado:", datos_anteriores.get("message_id"))
+
+    comparaciones = calcular_comparaciones(historial, estadisticas)
+    mensaje = crear_mensaje(estadisticas, comparaciones)
+
+    print("\nMensaje generado:")
+    print(mensaje)
+    print()
 
     message_id = await publicar_o_actualizar_mensaje(
         texto=mensaje,
         message_id=datos_anteriores.get("message_id"),
     )
+
+    print("Message ID utilizado:", message_id)
 
     nuevos_datos = {
         "suscriptores": estadisticas["suscriptores"],
@@ -39,12 +57,9 @@ async def ejecutar_actualizacion() -> None:
     }
 
     guardar_datos(nuevos_datos)
+    registrar_medicion(historial, estadisticas)
 
-    print("✅ RojoStats se actualizó correctamente.")
-    print(f"Canal: {estadisticas['nombre']}")
-    print(f"Suscriptores: {estadisticas['suscriptores']}")
-    print(f"Visualizaciones: {estadisticas['visualizaciones']}")
-    print(f"Videos: {estadisticas['videos']}")
+    print("✅ RojoStats terminó la ejecución.")
 
 
 def main() -> None:

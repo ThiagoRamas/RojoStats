@@ -18,6 +18,7 @@ YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
 YOUTUBE_HANDLE = os.getenv("YOUTUBE_HANDLE", "@Independiente")
 
 DATA_FILE = BASE_DIR / "datos.json"
+HISTORY_FILE = BASE_DIR / "historial.json"
 
 
 def validar_configuracion() -> None:

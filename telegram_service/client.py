@@ -13,9 +13,9 @@ async def publicar_o_actualizar_mensaje(
     message_id: int | None,
 ) -> int:
     """
-    Publica un mensaje nuevo o edita el existente.
+    Publica un mensaje nuevo o edita el mensaje existente.
 
-    Devuelve el message_id del mensaje utilizado.
+    Devuelve el message_id utilizado.
     """
 
     bot = Bot(token=TELEGRAM_TOKEN)
@@ -28,18 +28,30 @@ async def publicar_o_actualizar_mensaje(
                 parse_mode="HTML",
             )
 
+            print(f"Canal utilizado: {resultado.chat.title}")
+            print(f"ID del canal: {resultado.chat.id}")
+            print(f"Mensaje nuevo: {resultado.message_id}")
+
             return resultado.message_id
 
         try:
-            await bot.edit_message_text(
+            resultado = await bot.edit_message_text(
                 chat_id=TELEGRAM_CHANNEL,
                 message_id=message_id,
                 text=texto,
                 parse_mode="HTML",
             )
 
+            print(f"Canal utilizado: {resultado.chat.title}")
+            print(f"ID del canal: {resultado.chat.id}")
+            print(f"Mensaje editado: {resultado.message_id}")
+            print("Texto confirmado por Telegram:")
+            print(resultado.text)
+
         except BadRequest as error:
-            if "Message is not modified" not in str(error):
+            if "Message is not modified" in str(error):
+                print("Telegram informa que el mensaje no cambió.")
+            else:
                 raise
 
         return message_id

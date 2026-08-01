@@ -1,174 +1,130 @@
 # 🔴 RojoStats
 
-> Monitor automático de estadísticas públicas del canal oficial de YouTube del Club Atlético Independiente.
+> Monitor automatizado de analítica pública de YouTube para el Club Atlético Independiente.
 
-![Python](https://img.shields.io/badge/Python-3.14-blue?style=for-the-badge&logo=python)
-![Git](https://img.shields.io/badge/Git-Version%20Control-F05032?style=for-the-badge&logo=git)
-![Telegram](https://img.shields.io/badge/Telegram-Bot-26A5E4?style=for-the-badge&logo=telegram)
-![YouTube](https://img.shields.io/badge/YouTube-Data%20API-FF0000?style=for-the-badge&logo=youtube)
-![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3.12%2B-3776AB?style=flat-square&logo=python&logoColor=white)
+![YouTube Data API](https://img.shields.io/badge/YouTube_Data_API-v3-FF0000?style=flat-square&logo=youtube&logoColor=white)
+![Telegram](https://img.shields.io/badge/Telegram-Bot_API-26A5E4?style=flat-square&logo=telegram&logoColor=white)
+![GitHub Actions](https://img.shields.io/github/actions/workflow/status/ThiagoRamas/RojoStats/actualizar.yml?style=flat-square&logo=githubactions&label=hourly%20update)
+![Tests](https://img.shields.io/badge/tests-10%20passing-success?style=flat-square)
 
----
+## Descripción
 
-## 📌 Descripción
+RojoStats transforma estadísticas públicas del canal oficial de YouTube de Independiente en un informe de crecimiento actualizado automáticamente. El sistema consulta la API oficial, conserva una serie histórica, calcula comparaciones temporales, analiza el rendimiento de videos recientes y actualiza un único mensaje de Telegram sin generar spam.
 
-RojoStats es una aplicación desarrollada en **Python** que consulta estadísticas públicas del canal oficial de YouTube del Club Atlético Independiente mediante la **YouTube Data API v3**.
+El proyecto está pensado como una solución pequeña pero completa de integración, automatización y análisis de datos.
 
-La aplicación actualiza automáticamente un único mensaje en un canal de Telegram mostrando:
+## Funcionalidades
 
-- 👥 Cantidad de suscriptores.
-- 👁️ Visualizaciones totales.
-- 🎬 Cantidad de videos publicados.
-- 📈 Variación respecto de la última consulta.
-- 🕒 Fecha y hora de la última actualización.
+- Consulta de suscriptores, visualizaciones y videos publicados.
+- Comparaciones contra el inicio del día, 7 días y 30 días.
+- Porcentajes de crecimiento y promedios diarios.
+- Historial horario durante 7 días y resumen diario para el largo plazo.
+- Último video publicado con vistas, likes y comentarios.
+- Video más visto de los últimos 30 días.
+- Señales de aceleración, desaceleración y nuevas publicaciones.
+- Actualización del mismo mensaje de Telegram.
+- Ejecución automática cada hora mediante GitHub Actions.
+- Persistencia del historial entre ejecuciones.
+- Pruebas automatizadas para historial, tendencias y respuestas de YouTube.
 
-El proyecto fue desarrollado con una arquitectura modular para facilitar su mantenimiento y futuras ampliaciones.
+## Arquitectura
 
----
-
-# 📷 Vista previa
-
-![RojoStats en Telegram](docs/telegram-preview.jpg)
-
-# ✨ Funcionalidades
-
-- ✅ Consulta automática de la YouTube Data API.
-- ✅ Publicación automática en Telegram.
-- ✅ Actualización del mismo mensaje sin generar spam.
-- ✅ Cálculo de variaciones.
-- ✅ Arquitectura modular.
-- ✅ Configuración mediante variables de entorno (.env).
-- ✅ Control de errores.
-- ✅ Versionado con Git y GitHub.
-
----
-
-# 🏗 Arquitectura
-
+```text
+YouTube Data API
+        │
+        ▼
+youtube_service     Recolección y normalización
+        │
+        ▼
+storage             Historial y compactación
+        │
+        ▼
+analytics           Comparaciones, promedios y señales
+        │
+        ▼
+telegram_service    Construcción y publicación del informe
+        │
+        ▼
+GitHub Actions      Ejecución horaria y persistencia
 ```
-RojoStats
-│
-├── telegram_service
-│   ├── client.py
-│   └── formatter.py
-│
-├── youtube_service
-│   └── client.py
-│
-├── storage
-│   └── repository.py
-│
-├── utils
-│   └── numbers.py
-│
-├── main.py
+
+### Estructura principal
+
+```text
+RojoStats/
+├── .github/workflows/   # Automatización horaria
+├── analytics/           # Señales y tendencias
+├── storage/             # Estado e historial
+├── telegram_service/    # Cliente y formato del informe
+├── tests/               # Pruebas automatizadas
+├── utils/               # Formateo numérico
+├── youtube_service/     # Integración con YouTube
 ├── config.py
-├── requirements.txt
-└── README.md
+└── main.py
 ```
 
-Cada módulo posee una única responsabilidad, facilitando el mantenimiento y la escalabilidad del proyecto.
+## Estrategia de historial
 
----
+Cada ejecución registra una medición con horario argentino. Para mantener precisión sin hacer crecer el repositorio indefinidamente, RojoStats conserva todas las mediciones horarias de los últimos 7 días y una medición diaria para períodos anteriores.
 
-# 🛠 Tecnologías
+Esto permite calcular tendencias semanales y mensuales utilizando referencias reales en lugar de comparar únicamente contra la ejecución anterior.
 
-- Python
-- YouTube Data API v3
-- Telegram Bot API
-- Requests
-- python-dotenv
-- Git
-- GitHub
+## Automatización
 
----
+El workflow `.github/workflows/actualizar.yml` se ejecuta cada hora y también puede iniciarse manualmente. La automatización:
 
-# 🚀 Instalación
+1. instala las dependencias;
+2. consulta YouTube;
+3. actualiza Telegram;
+4. registra y compacta el historial;
+5. persiste la nueva medición en el repositorio.
 
-Clonar el repositorio
+Las credenciales se almacenan como GitHub Actions Secrets y nunca se incluyen en el código.
 
-```bash
-git clone https://github.com/ThiagoRamas/RojoStats.git
-cd RojoStats
-```
-
-Crear un entorno virtual
-
-```bash
-python -m venv .venv
-```
-
-Activarlo (Windows)
+## Instalación local
 
 ```powershell
+git clone https://github.com/ThiagoRamas/RojoStats.git
+cd RojoStats
+python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-```
-
-Instalar dependencias
-
-```bash
 pip install -r requirements.txt
 ```
 
-Crear un archivo `.env`
+Crear un archivo `.env`:
 
 ```env
-TOKEN=TU_TOKEN
-CANAL=@TuCanal
-YOUTUBE_API_KEY=TU_API_KEY
+TOKEN=telegram_bot_token
+CANAL=@canal_de_telegram
+YOUTUBE_API_KEY=youtube_api_key
 YOUTUBE_HANDLE=@Independiente
 ```
 
-Ejecutar
+Ejecutar:
 
-```bash
+```powershell
 python main.py
 ```
 
----
+## Pruebas
 
-# 🔐 Seguridad
+```powershell
+python -m unittest discover -s tests -v
+```
 
-El archivo `.env` se encuentra excluido mediante `.gitignore`, evitando publicar:
+La suite cubre cálculos diarios, semanales y mensuales, porcentajes, compactación, zonas horarias, señales de tendencia, métricas opcionales y sanitización de errores.
 
-- Token del bot de Telegram.
-- Clave de la YouTube Data API.
-- Información privada de configuración.
+## Seguridad y alcance
 
----
+- Las claves se gestionan mediante `.env` y GitHub Actions Secrets.
+- Los mensajes de error no exponen credenciales.
+- Solo se utilizan datos públicos obtenidos mediante APIs oficiales.
+- No se utiliza scraping ni acceso no autorizado.
+- El proyecto no está afiliado ni representa oficialmente al Club Atlético Independiente.
 
-# 📈 Roadmap
+## Autor
 
-### ✅ v1.0
-
-- Integración con YouTube Data API.
-- Integración con Telegram.
-- Arquitectura modular.
-- Variables de entorno.
-- Git y GitHub.
-
-### 🔜 Próximas versiones
-
-- Automatización de la actualización.
-- Registro de logs.
-- Historial de estadísticas.
-- Dashboard web (opcional).
-
----
-
-# 👨‍💻 Autor
-
-**Thiago Ramas**
-
-Estudiante de Licenciatura en Sistemas.
-
-GitHub:
-https://github.com/ThiagoRamas
-
----
-
-# 📄 Licencia
+**Thiago Ramas** — estudiante de Licenciatura en Sistemas.
 
 Proyecto desarrollado con fines educativos y de portfolio.
-
-No está afiliado ni representa oficialmente al Club Atlético Independiente.

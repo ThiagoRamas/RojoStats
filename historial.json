@@ -138,31 +138,7 @@
         "videos": 1139
     },
     {
-        "timestamp": "2026-08-23T20:33:59-03:00",
-        "suscriptores": 112000,
-        "visualizaciones": 13394990,
-        "videos": 1139
-    },
-    {
-        "timestamp": "2026-08-23T22:56:06-03:00",
-        "suscriptores": 112000,
-        "visualizaciones": 13394990,
-        "videos": 1139
-    },
-    {
         "timestamp": "2026-08-24T00:14:59-03:00",
-        "suscriptores": 112000,
-        "visualizaciones": 13395708,
-        "videos": 1139
-    },
-    {
-        "timestamp": "2026-08-24T01:05:07-03:00",
-        "suscriptores": 112000,
-        "visualizaciones": 13395708,
-        "videos": 1139
-    },
-    {
-        "timestamp": "2026-08-24T01:59:10-03:00",
         "suscriptores": 112000,
         "visualizaciones": 13395708,
         "videos": 1139
@@ -610,5 +586,11 @@
         "suscriptores": 112000,
         "visualizaciones": 13427089,
         "videos": 1142
+    },
+    {
+        "timestamp": "2026-08-31T02:28:55-03:00",
+        "suscriptores": 112000,
+        "visualizaciones": 13428804,
+        "videos": 1143
     }
 ]

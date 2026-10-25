@@ -474,18 +474,6 @@
         "videos": 1157
     },
     {
-        "timestamp": "2026-10-18T14:19:21-03:00",
-        "suscriptores": 113000,
-        "visualizaciones": 13753085,
-        "videos": 1157
-    },
-    {
-        "timestamp": "2026-10-18T17:36:45-03:00",
-        "suscriptores": 113000,
-        "visualizaciones": 13753085,
-        "videos": 1158
-    },
-    {
         "timestamp": "2026-10-18T20:08:02-03:00",
         "suscriptores": 113000,
         "visualizaciones": 13753085,
@@ -705,6 +693,12 @@
         "timestamp": "2026-10-25T13:10:45-03:00",
         "suscriptores": 113000,
         "visualizaciones": 13780058,
+        "videos": 1159
+    },
+    {
+        "timestamp": "2026-10-25T18:43:48-03:00",
+        "suscriptores": 113000,
+        "visualizaciones": 13803519,
         "videos": 1159
     }
 ]

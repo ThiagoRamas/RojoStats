@@ -546,12 +546,6 @@
         "videos": 1161
     },
     {
-        "timestamp": "2026-10-30T12:53:12-03:00",
-        "suscriptores": 113000,
-        "visualizaciones": 13837724,
-        "videos": 1161
-    },
-    {
         "timestamp": "2026-10-30T17:44:22-03:00",
         "suscriptores": 113000,
         "visualizaciones": 13837724,
@@ -691,6 +685,12 @@
     },
     {
         "timestamp": "2026-11-06T04:53:35-03:00",
+        "suscriptores": 113000,
+        "visualizaciones": 13865182,
+        "videos": 1162
+    },
+    {
+        "timestamp": "2026-11-06T12:53:22-03:00",
         "suscriptores": 113000,
         "visualizaciones": 13865182,
         "videos": 1162
